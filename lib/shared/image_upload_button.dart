@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'constants.dart';
 
 class ImageUploadButton extends StatelessWidget {
-  final Function onPressed;
+  final VoidCallback onPressed;
   final String text;
+  final IconData iconData;
 
-  const ImageUploadButton({super.key, required this.onPressed, required this.text});
+  const ImageUploadButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    required this.iconData, // Default background color
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => onPressed(),
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[200],
+         // Apply background color
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10.0), // Rounded corners
         ),
+        minimumSize: const Size(100, 50), // Set a reasonable size
+        padding: const EdgeInsets.all(12.0), // Adjust padding for content
       ),
-      child: Stack(
+      child: Row( // Use Row to arrange icon and text horizontally
+        mainAxisAlignment: MainAxisAlignment.center, // Center content
         children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Icon(
-              Icons.add_a_photo,
-              size: 40.0,
-              color: Colors.grey[800],
-            ),
+          Icon(
+            iconData,
+            size: 24.0, // Adjust icon size to fit within button
+            color: AppColors().primaryColor,// Maintain icon color
           ),
-          Positioned(
-            bottom: 10.0,
-            left: 10.0,
-            child: Text(
-              text,
-              style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
+          const SizedBox(width: 10.0), // Spacing between icon and text
+          Text(
+            text,
+            style: GoogleFonts.pacifico(
+              textStyle: TextStyle(
+                color: AppColors().primaryColor,
+                fontWeight: FontWeight.bold,
+                
+              ),
             ),
           ),
         ],

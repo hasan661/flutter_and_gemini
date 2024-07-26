@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_and_gemini/services/recipe_model.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../shared/constants.dart';
 
 class RecipeScreen extends StatelessWidget {
   const RecipeScreen({
@@ -14,47 +17,76 @@ class RecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
-        title: Text(recipeModel.title),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const Center(),
+        backgroundColor:
+            AppColors().primaryColor, // Darker app bar for better contrast
+        title: Text(
+          recipeModel.title,
+          style: GoogleFonts.pacifico(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.file(pickedImage),
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                "Ingredients",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListView.builder(
-              padding: const EdgeInsets.all(20),
-              physics: const NeverScrollableScrollPhysics(),
-              primary: false,
-              shrinkWrap: true,
-              itemCount: recipeModel.ingredients.length,
-              itemBuilder: (context, index) =>
-                  Text("${index + 1}) ${recipeModel.ingredients[index]}"),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text("Instructions",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
-            ListView.builder(
-              padding: const EdgeInsets.all(20),
-              physics: const NeverScrollableScrollPhysics(),
-              primary: false,
-              shrinkWrap: true,
-              itemCount: recipeModel.instructions.length,
-              itemBuilder: (context, index) =>
-                  Text("${index + 1}) ${recipeModel.instructions[index]}"),
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.file(pickedImage),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Ingredients",
+                      style: GoogleFonts.pacifico(
+                          textStyle: TextStyle(
+                            color: AppColors().primaryColor,
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      primary: false,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                      ),
+                      itemCount: recipeModel.ingredients.length,
+                      itemBuilder: (context, index) => Text(
+                          "${index + 1}) ${recipeModel.ingredients[index]}"),
+                    ),
+                    Text(
+                      "Instructions",
+                      style: GoogleFonts.pacifico(
+                          textStyle: TextStyle(
+                            color: AppColors().primaryColor,
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      primary: false,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                      ),
+                      itemCount: recipeModel.instructions.length,
+                      itemBuilder: (context, index) => Text(
+                          "${index + 1}) ${recipeModel.instructions[index]}"),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

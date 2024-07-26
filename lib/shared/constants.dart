@@ -9,7 +9,7 @@ class AppColors{
 }
 
 class StringConstants{
-  var apiKey="AIzaSyBJunq6OliWjKt0qlrmXw0YLv2kDo7R230";
+  var apiKey="AIzaSyA6Jp2TMdrWJWAst8peGxG4oxvIxEHIWMo";
   var model="gemini-1.5-flash";
 }
 

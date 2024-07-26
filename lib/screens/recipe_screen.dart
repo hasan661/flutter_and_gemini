@@ -20,24 +20,45 @@ class RecipeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: const Center(),
-        backgroundColor:
-            AppColors().primaryColor, // Darker app bar for better contrast
-        title: Text(
-          recipeModel.title,
-          style: GoogleFonts.pacifico(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
           ),
+          backgroundColor:
+              AppColors().primaryColor, // Darker app bar for better contrast
+          title: Text(
+            "Recipe",
+            style: GoogleFonts.lato(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.file(pickedImage),
+              Container(
+                width: double.infinity,
+                height: 240,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: FileImage(pickedImage),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5),
+                      BlendMode.srcOver,
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -46,42 +67,83 @@ class RecipeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Ingredients",
-                      style: GoogleFonts.pacifico(
-                          textStyle: TextStyle(
-                            color: AppColors().primaryColor,
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    Center(
+                      child: Text(
+                        recipeModel.title,
+                        style: GoogleFonts.lato(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors()
+                              .primaryColor, // Darker text for better legibility
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        const Icon(Icons.food_bank_outlined),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Ingredients",
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              color: AppColors().primaryColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       primary: false,
                       shrinkWrap: true,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 20,
+                        vertical: 10,
                       ),
                       itemCount: recipeModel.ingredients.length,
-                      itemBuilder: (context, index) => Text(
-                          "${index + 1}) ${recipeModel.ingredients[index]}"),
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                            "${index + 1}) ${recipeModel.ingredients[index]}"),
+                      ),
                     ),
-                    Text(
-                      "Instructions",
-                      style: GoogleFonts.pacifico(
-                          textStyle: TextStyle(
-                            color: AppColors().primaryColor,
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    const Divider(),
+                    Row(
+                      children: [
+                        const Icon(Icons.food_bank_outlined),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Instructions",
+                          style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                  color: AppColors().primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ],
                     ),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       primary: false,
                       shrinkWrap: true,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 20,
+                        vertical: 10,
                       ),
                       itemCount: recipeModel.instructions.length,
-                      itemBuilder: (context, index) => Text(
-                          "${index + 1}) ${recipeModel.instructions[index]}"),
-                    )
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                            "${index + 1}) ${recipeModel.instructions[index]}"),
+                      ),
+                    ),
+
                   ],
                 ),
               )
